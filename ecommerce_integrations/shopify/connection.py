@@ -17,6 +17,13 @@ from ecommerce_integrations.shopify.constants import (
 )
 from ecommerce_integrations.shopify.utils import create_shopify_log
 
+from shopify import ApiVersion, Release
+
+try:
+	ApiVersion.coerce_to_version(API_VERSION)
+except Exception:
+	ApiVersion.define_version(Release(API_VERSION))
+
 
 def temp_shopify_session(func):
 	"""Any function that needs to access shopify api needs this decorator. The decorator starts a temp session that's destroyed when function returns."""
